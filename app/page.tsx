@@ -169,19 +169,19 @@ export default function Home() {
         fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
         display: 'flex',
         flexDirection: 'column',
-        overflow: 'hidden' // 防止整个页面滚动
+        overflow: 'hidden'
       }}>
-        {/* 页面标题和进度条 - 固定顶部 */}
+        {/* 页面标题和进度条 - 减少顶部空白 */}
         <div className="header-section" style={{ 
           textAlign: 'center', 
-          padding: '1.5rem 1rem 1rem 1rem',
+          padding: '1rem 1rem 0.75rem 1rem', // 减少顶部和底部padding
           color: 'var(--text-primary)',
-          flexShrink: 0 // 防止压缩
+          flexShrink: 0
         }}>
           <h1 className="header-title" style={{ 
-            fontSize: '2.5rem', 
+            fontSize: '2.25rem', // 稍微减少字体大小
             fontWeight: '800', 
-            marginBottom: '1rem',
+            marginBottom: '0.75rem', // 减少底部间距
             textShadow: '0 4px 12px rgba(0,0,0,0.3)',
             letterSpacing: '-0.025em'
           }}>
@@ -193,7 +193,7 @@ export default function Home() {
             display: 'flex',
             justifyContent: 'center',
             gap: '2rem',
-            marginBottom: '1rem',
+            marginBottom: '0.75rem', // 减少底部间距
             fontSize: '0.9rem',
             fontWeight: '500'
           }}>
@@ -230,71 +230,64 @@ export default function Home() {
           )}
         </div>
 
-        {/* 三列布局容器 - 占用剩余空间 */}
+        {/* 三列布局容器 - 优化高度分配 */}
         <div className="three-column-grid" style={{
           display: 'grid',
           gridTemplateColumns: '400px 1fr 450px',
           gap: '2rem',
-          maxWidth: '95vw', // 使用视窗宽度的95%
+          maxWidth: '95vw',
           width: '100%',
           margin: '0 auto',
           padding: '0 2rem 1rem 2rem',
-          flex: 1, // 占用剩余空间
-          minHeight: 0 // 允许子元素缩小
+          flex: 1,
+          minHeight: 0, // 允许收缩
+          overflow: 'hidden' // 防止内容溢出
         }}>
           
-          {/* 左侧：添加任务 + 数据管理 - 独立滚动 */}
-          <div className="mobile-column" style={{ 
+          {/* 左侧：添加任务 + 数据管理 - 固定高度，无滚动条 */}
+          <div className="left-panel" style={{ 
             display: 'flex', 
             flexDirection: 'column',
             height: '100%',
-            minHeight: 0,
-            overflow: 'hidden'
+            gap: '1rem',
+            overflow: 'hidden' // 防止整体滚动
           }}>
-            <div style={{
-              flex: 1,
-              overflowY: 'auto',
-              paddingRight: '0.75rem',
-              paddingBottom: '1rem',
-              scrollbarWidth: 'thin',
-              scrollbarColor: 'var(--scrollbar-thumb) var(--scrollbar-track)'
-            }}>
-              <div style={{
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '1.5rem'
-              }}>
-            {/* 添加任务表单 - 扩大尺寸以对齐右侧 */}
-            <div className="task-form" style={{ 
+            
+            {/* 添加任务表单 - 紧凑布局，精确控制高度 */}
+            <div className="task-form-container" style={{ 
               background: 'var(--card-bg)',
               backdropFilter: 'blur(20px)',
-              padding: '2.5rem', // 恢复统一内边距以确保对齐
+              padding: '1.25rem', // 进一步减少内边距
               borderRadius: '16px', 
               boxShadow: 'var(--card-shadow)',
               border: '1px solid var(--border-light)',
-              flex: 1 // 让表单区域占用更多空间
+              flex: 1, // 占用主要空间
+              display: 'flex',
+              flexDirection: 'column',
+              overflow: 'hidden'
             }}>
+              {/* 标题区域 - 紧凑设计 */}
               <div style={{
                 display: 'flex',
                 alignItems: 'center',
-                marginBottom: '1.5rem', // 统一标题下方间距
-                gap: '0.75rem',
-                minHeight: '40px' // 确保标题容器高度一致
+                marginBottom: '1rem',
+                gap: '0.5rem',
+                flexShrink: 0
               }}>
                 <div style={{
-                  width: '32px',
-                  height: '32px',
-                  borderRadius: '8px',
+                  width: '24px', // 进一步减少图标大小
+                  height: '24px',
+                  borderRadius: '6px',
                   background: 'linear-gradient(135deg, #667eea, #764ba2)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  fontSize: '1rem'
+                  fontSize: '0.75rem'
                 }}>
                   🎯
                 </div>
                 <h3 style={{ 
-                  fontSize: '1.1rem', 
+                  fontSize: '0.95rem', // 减少字体大小
                   fontWeight: '600', 
                   color: 'var(--text-secondary)',
                   margin: 0
@@ -303,96 +296,107 @@ export default function Home() {
                 </h3>
               </div>
               
-              <form onSubmit={addTask}>
-                <div style={{ marginBottom: '1.5rem' }}>
+              {/* 表单内容区域 - 优化空间分配 */}
+              <form onSubmit={addTask} style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+                {/* 任务标题 */}
+                <div style={{ marginBottom: '0.875rem', flexShrink: 0 }}>
                   <label style={{
                     display: 'block',
-                    fontSize: '0.9rem',
+                    fontSize: '0.8rem',
                     fontWeight: '500',
                     color: 'var(--text-secondary)',
-                    marginBottom: '0.75rem'
+                    marginBottom: '0.375rem'
                   }}>
                     任务标题
                   </label>
                   <input
-                    className="task-form"
                     type="text"
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
                     placeholder="今天要完成什么？"
                     style={{
                       width: '100%',
-                      padding: '1.25rem',
+                      padding: '0.75rem',
                       border: '2px solid var(--border)',
-                      borderRadius: '12px',
-                      fontSize: '1rem',
+                      borderRadius: '10px',
+                      fontSize: '0.9rem',
                       outline: 'none',
                       backgroundColor: 'var(--input-bg)',
                       color: 'var(--text-secondary)',
-                      minHeight: '56px'
+                      height: '40px', // 稍微增加高度
+                      boxSizing: 'border-box'
                     }}
                     required
                   />
                 </div>
 
-                <div style={{ marginBottom: '1.5rem' }}>
+                {/* 详细描述 - 占用更多空间 */}
+                <div style={{ marginBottom: '0.875rem', flex: 1, display: 'flex', flexDirection: 'column' }}>
                   <label style={{
                     display: 'block',
-                    fontSize: '0.9rem',
+                    fontSize: '0.8rem',
                     fontWeight: '500',
                     color: 'var(--text-secondary)',
-                    marginBottom: '0.75rem'
+                    marginBottom: '0.375rem',
+                    flexShrink: 0
                   }}>
                     详细描述
                   </label>
                   <textarea
-                    className="task-form"
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                     placeholder="详细描述任务内容、要求、注意事项等..."
-                    rows={5}
                     style={{
                       width: '100%',
-                      padding: '1.25rem',
+                      padding: '0.75rem',
                       border: '2px solid var(--border)',
-                      borderRadius: '12px',
-                      fontSize: '0.95rem',
+                      borderRadius: '10px',
+                      fontSize: '0.85rem',
                       outline: 'none',
-                      resize: 'vertical',
+                      resize: 'none',
                       backgroundColor: 'var(--input-bg)',
                       color: 'var(--text-secondary)',
-                      minHeight: '140px',
-                      lineHeight: '1.5'
+                      flex: 1, // 占用剩余空间
+                      minHeight: '80px', // 最小高度
+                      lineHeight: '1.4',
+                      boxSizing: 'border-box'
                     }}
                   />
                 </div>
 
-                <div style={{ marginBottom: '2rem' }}>
+                {/* 优先级选择 - 优化高度和显示 */}
+                <div style={{ marginBottom: '1rem', flexShrink: 0 }}>
                   <label style={{
                     display: 'block',
-                    fontSize: '0.9rem',
+                    fontSize: '0.8rem',
                     fontWeight: '500',
                     color: 'var(--text-secondary)',
-                    marginBottom: '0.75rem'
+                    marginBottom: '0.375rem'
                   }}>
                     优先级
                   </label>
                   <select
-                    className="task-form"
                     value={priority}
                     onChange={(e) => setPriority(e.target.value as 'high' | 'medium' | 'low')}
                     style={{
                       width: '100%',
-                      padding: '1.25rem',
+                      padding: '0.75rem',
                       border: '2px solid var(--border)',
-                      borderRadius: '12px',
-                      fontSize: '1rem',
+                      borderRadius: '10px',
+                      fontSize: '0.9rem',
                       outline: 'none',
                       backgroundColor: 'var(--input-bg)',
                       color: 'var(--text-secondary)',
                       cursor: 'pointer',
                       fontWeight: '500',
-                      minHeight: '56px'
+                      height: '42px', // 增加高度确保完整显示
+                      boxSizing: 'border-box',
+                      appearance: 'none', // 移除默认样式
+                      backgroundImage: `url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e")`,
+                      backgroundRepeat: 'no-repeat',
+                      backgroundPosition: 'right 0.75rem center',
+                      backgroundSize: '1rem',
+                      paddingRight: '2.5rem' // 为箭头留出空间
                     }}
                   >
                     <option value="low">🌱 低优先级 - 可以稍后处理</option>
@@ -401,69 +405,76 @@ export default function Home() {
                   </select>
                 </div>
 
-                <button
-                  className="task-form"
-                  type="submit"
-                  disabled={loading || !title.trim()}
-                  style={{
-                    width: '100%',
-                    padding: '1.25rem',
-                    background: loading || !title.trim() ? 
-                      'linear-gradient(135deg, #9ca3af, #6b7280)' : 
-                      'linear-gradient(135deg, #667eea, #764ba2)',
-                    color: 'white',
-                    border: 'none',
-                    borderRadius: '12px',
-                    fontSize: '1.1rem',
-                    fontWeight: '600',
-                    cursor: loading || !title.trim() ? 'not-allowed' : 'pointer',
-                    boxShadow: loading || !title.trim() ? 
-                      'none' : 
-                      '0 8px 20px rgba(102, 126, 234, 0.3)',
-                    transition: 'all 0.2s ease',
-                    minHeight: '56px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    gap: '0.5rem'
-                  }}
-                >
-                  {loading ? '⏳ 添加中...' : '🚀 添加任务'}
-                </button>
+                {/* 添加按钮 - 底部固定 */}
+                <div style={{ flexShrink: 0 }}>
+                  <button
+                    type="submit"
+                    disabled={loading || !title.trim()}
+                    style={{
+                      width: '100%',
+                      padding: '0.875rem',
+                      background: loading || !title.trim() ? 
+                        'linear-gradient(135deg, #9ca3af, #6b7280)' : 
+                        'linear-gradient(135deg, #667eea, #764ba2)',
+                      color: 'white',
+                      border: 'none',
+                      borderRadius: '10px',
+                      fontSize: '0.95rem',
+                      fontWeight: '600',
+                      cursor: loading || !title.trim() ? 'not-allowed' : 'pointer',
+                      boxShadow: loading || !title.trim() ? 
+                        'none' : 
+                        '0 6px 16px rgba(102, 126, 234, 0.3)',
+                      transition: 'all 0.2s ease',
+                      height: '46px', // 稍微增加按钮高度
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      gap: '0.5rem',
+                      boxSizing: 'border-box'
+                    }}
+                  >
+                    {loading ? '⏳ 添加中...' : '🚀 添加任务'}
+                  </button>
+                </div>
               </form>
             </div>
 
-            {/* 数据管理 */}
-            <ImportExport tasks={tasks} onImportComplete={fetchTasks} />
-              </div>
+            {/* 数据管理 - 固定高度 */}
+            <div style={{ flexShrink: 0 }}>
+              <ImportExport tasks={tasks} onImportComplete={fetchTasks} />
             </div>
           </div>
 
-          {/* 中间：任务列表 - 标题跟随滚动 */}
-          <div className="mobile-column" style={{ 
+          {/* 中间：任务列表 - 确保完整显示 */}
+          <div className="task-list-column" style={{ 
             background: 'var(--card-bg)',
             backdropFilter: 'blur(20px)',
             borderRadius: '16px', 
             boxShadow: 'var(--card-shadow)',
             border: '1px solid var(--border-light)',
             height: '100%',
-            overflow: 'hidden'
+            overflow: 'hidden',
+            display: 'flex',
+            flexDirection: 'column',
+            minHeight: 0 // 确保可以收缩
           }}>
             {/* 可滚动的整个内容区域（包含标题） */}
             <div className="task-list-content" style={{
               height: '100%',
               overflowY: 'auto',
-              padding: '2.5rem 2.5rem 4rem 2.5rem', // 增加底部内边距解决截断问题
+              padding: '2.5rem 2.5rem 4rem 2.5rem', // 减少底部padding到合理的4rem
               scrollbarWidth: 'thin',
-              scrollbarColor: 'var(--scrollbar-thumb) var(--scrollbar-track)'
+              scrollbarColor: 'var(--scrollbar-thumb) var(--scrollbar-track)',
+              boxSizing: 'border-box' // 确保padding计算正确
             }}>
               {/* 标题区域 - 跟随滚动 */}
               <div style={{
                 display: 'flex',
                 alignItems: 'center',
-                marginBottom: '1.5rem', // 统一标题下方间距
+                marginBottom: '1.5rem',
                 gap: '0.75rem',
-                minHeight: '40px' // 确保标题容器高度一致
+                minHeight: '40px'
               }}>
                 <div style={{
                   width: '32px',
@@ -519,13 +530,14 @@ export default function Home() {
                 display: 'flex', 
                 flexDirection: 'column', 
                 gap: '0.75rem',
-                paddingBottom: '1rem' // 为任务列表添加额外底部空间
+                paddingBottom: '1rem'
               }}>
                 {tasks.map((task) => {
                   const priorityInfo = getPriorityStyle(task.priority)
                   return (
                     <div
                       key={task.id}
+                      className="task-card"
                       style={{
                         background: task.completed ? 
                           'var(--task-completed-bg)' : 
@@ -537,7 +549,10 @@ export default function Home() {
                         overflow: 'hidden',
                         boxShadow: task.completed ? 
                           'var(--task-completed-shadow)' : 
-                          'var(--task-shadow)'
+                          'var(--task-shadow)',
+                        minHeight: '120px', // 统一最小高度
+                        display: 'flex',
+                        flexDirection: 'column'
                       }}
                     >
                       {/* 渐变装饰条 */}
@@ -552,10 +567,21 @@ export default function Home() {
                           'linear-gradient(90deg, #667eea, #764ba2)'
                       }} />
 
-                      <div style={{ padding: '1.25rem' }}>
+                      <div className="task-content" style={{ 
+                        padding: '1.25rem',
+                        flex: 1,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        minHeight: '100px' // 确保内容区域有统一的最小高度
+                      }}>
                         {editingTask === task.id ? (
-                          // 编辑模式
-                          <div>
+                          // 编辑模式 - 统一样式
+                          <div style={{ 
+                            display: 'flex', 
+                            flexDirection: 'column', 
+                            gap: '0.75rem',
+                            minHeight: '80px' // 确保编辑模式也有统一高度
+                          }}>
                             <input
                               type="text"
                               value={editTitle}
@@ -565,11 +591,11 @@ export default function Home() {
                                 padding: '0.625rem',
                                 border: '2px solid #667eea',
                                 borderRadius: '8px',
-                                marginBottom: '0.625rem',
                                 fontSize: '0.95rem',
                                 outline: 'none',
                                 backgroundColor: 'var(--input-bg)',
-                                color: 'var(--text-secondary)'
+                                color: 'var(--text-secondary)',
+                                boxSizing: 'border-box'
                               }}
                             />
                             <textarea
@@ -581,15 +607,15 @@ export default function Home() {
                                 padding: '0.625rem',
                                 border: '2px solid #667eea',
                                 borderRadius: '8px',
-                                marginBottom: '0.875rem',
                                 fontSize: '0.85rem',
                                 resize: 'vertical',
                                 outline: 'none',
                                 backgroundColor: 'var(--input-bg)',
-                                color: 'var(--text-secondary)'
+                                color: 'var(--text-secondary)',
+                                boxSizing: 'border-box'
                               }}
                             />
-                            <div style={{ display: 'flex', gap: '0.625rem' }}>
+                            <div style={{ display: 'flex', gap: '0.625rem', marginTop: 'auto' }}>
                               <button
                                 onClick={() => saveEdit(task.id)}
                                 style={{
@@ -623,8 +649,13 @@ export default function Home() {
                             </div>
                           </div>
                         ) : (
-                          // 显示模式
-                          <div style={{ display: 'flex', alignItems: 'flex-start', gap: '0.875rem' }}>
+                          // 显示模式 - 统一样式
+                          <div style={{ 
+                            display: 'flex', 
+                            alignItems: 'flex-start', 
+                            gap: '0.875rem',
+                            minHeight: '80px' // 确保显示模式也有统一高度
+                          }}>
                             <input
                               type="checkbox"
                               checked={task.completed}
@@ -638,7 +669,7 @@ export default function Home() {
                               }}
                             />
                             
-                            <div style={{ flex: 1 }}>
+                            <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
                               <h3 style={{
                                 fontSize: '1rem',
                                 fontWeight: '600',
@@ -694,7 +725,12 @@ export default function Home() {
                               </div>
                             </div>
                             
-                            <div style={{ display: 'flex', gap: '0.375rem' }}>
+                            <div style={{ 
+                              display: 'flex', 
+                              gap: '0.375rem',
+                              alignSelf: 'flex-start',
+                              marginTop: '0.25rem' // 与checkbox对齐
+                            }}>
                               <button
                                 onClick={() => startEdit(task)}
                                 style={{
@@ -769,7 +805,7 @@ export default function Home() {
               <div style={{
                 flex: 1,
                 overflowY: 'auto',
-                padding: '2.5rem 1.5rem 2rem 1.5rem', // 统一顶部内边距
+                padding: '2.5rem 1.5rem 2rem 1.5rem',
                 scrollbarWidth: 'thin',
                 scrollbarColor: 'var(--scrollbar-thumb) var(--scrollbar-track)'
               }}>
@@ -830,6 +866,50 @@ export default function Home() {
           --accent-muted: rgba(156, 163, 175, 0.5);
         }
         
+        /* 确保任务列表容器正确显示 */
+        .task-list-content {
+          position: relative;
+          overflow-y: auto !important;
+          overflow-x: hidden;
+        }
+        
+        .task-list-column {
+          position: relative;
+          height: 100% !important;
+          max-height: 100% !important;
+          overflow: hidden;
+        }
+        
+        /* 统一所有任务卡片样式 */
+        .task-card {
+          min-height: 120px !important;
+          max-height: none !important;
+          box-sizing: border-box !important;
+        }
+        
+        .task-content {
+          padding: 1.25rem !important;
+          box-sizing: border-box !important;
+          display: flex !important;
+          flex-direction: column !important;
+          min-height: 100px !important;
+        }
+        
+        /* 确保任务内容区域对齐 */
+        .task-card .task-content > div {
+          margin: 0 !important;
+        }
+        
+        .task-card .task-content h3 {
+          margin-bottom: 0.375rem !important;
+          margin-top: 0 !important;
+        }
+        
+        .task-card .task-content p {
+          margin-bottom: 0.625rem !important;
+          margin-top: 0 !important;
+        }
+        
         [data-theme="dark"] {
           --scrollbar-track: rgba(255, 255, 255, 0.1);
           --scrollbar-thumb: rgba(255, 255, 255, 0.3);
@@ -886,6 +966,10 @@ export default function Home() {
             max-height: 400px !important;
           }
           
+          .left-panel {
+            max-height: 500px !important;
+          }
+          
           .main-container {
             height: auto !important;
             min-height: 100vh !important;
@@ -914,6 +998,10 @@ export default function Home() {
             max-height: 300px !important;
           }
           
+          .left-panel {
+            max-height: 400px !important;
+          }
+          
           /* 移动端统计卡片调整 */
           .stats-grid {
             grid-template-columns: 1fr !important;
@@ -926,30 +1014,28 @@ export default function Home() {
           }
           
           /* 移动端表单调整 */
-          .task-form {
-            padding: 1.5rem !important;
-          }
-          
-          .task-form textarea {
-            rows: 3 !important;
-            min-height: 100px !important;
-          }
-          
-          .task-form input,
-          .task-form select,
-          .task-form button {
-            min-height: 48px !important;
+          .task-form-container {
             padding: 1rem !important;
+          }
+          
+          .task-form-container textarea {
+            height: 50px !important;
+          }
+          
+          .task-form-container input,
+          .task-form-container select,
+          .task-form-container button {
+            height: 36px !important;
+            padding: 0.65rem !important;
           }
           
           /* 移动端任务列表调整 */
           .task-list-content {
-            padding: 1.5rem 1.5rem 3rem 1.5rem !important; /* 移动端也增加底部空间 */
+            padding: 1rem 1rem 3rem 1rem !important; /* 移动端合理的底部间距 */
           }
           
-          /* 移动端统一顶部对齐 */
-          .mobile-column .three-column-grid > div {
-            padding-top: 1.5rem !important;
+          .task-list-column {
+            max-height: 600px !important; /* 增加移动端最大高度 */
           }
         }
       `}</style>
