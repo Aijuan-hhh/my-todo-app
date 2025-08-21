@@ -1,0 +1,88 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 浅色模式变量 */
+:root {
+  --bg-gradient: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  --text-primary: #1e293b;
+  --text-secondary: #1e293b;
+  --text-tertiary: #64748b;
+  --text-muted: #94a3b8;
+  
+  --card-bg: rgba(255, 255, 255, 0.95);
+  --card-shadow: 0 20px 40px rgba(0,0,0,0.08), 0 0 0 1px rgba(255,255,255,0.9);
+  
+  --input-bg: #ffffff;
+  --border: #e2e8f0;
+  --border-light: rgba(255,255,255,0.8);
+  
+  --task-bg: linear-gradient(135deg, #ffffff, #fafbff);
+  --task-border: #f1f5f9;
+  --task-shadow: 0 8px 24px rgba(0,0,0,0.06);
+  --task-completed-bg: linear-gradient(135deg, #f8fafc, #f1f5f9);
+  --task-completed-shadow: 0 4px 12px rgba(0,0,0,0.04);
+  
+  --empty-bg: linear-gradient(135deg, #f8fafc, #f1f5f9);
+  --progress-bg: rgba(71, 85, 105, 0.1);
+  --accent-muted: linear-gradient(90deg, #e2e8f0, #cbd5e1);
+  
+  --button-secondary-bg: rgba(102, 126, 234, 0.08);
+  --button-secondary-border: rgba(102, 126, 234, 0.2);
+  --button-danger-bg: rgba(239, 68, 68, 0.08);
+  --button-danger-border: rgba(239, 68, 68, 0.2);
+}
+
+/* 深色模式变量 */
+.dark {
+  --bg-gradient: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+  --text-primary: #f1f5f9;
+  --text-secondary: #f8fafc;
+  --text-tertiary: #cbd5e1;
+  --text-muted: #64748b;
+  
+  --card-bg: rgba(30, 41, 59, 0.95);
+  --card-shadow: 0 20px 40px rgba(0,0,0,0.3), 0 0 0 1px rgba(255,255,255,0.1);
+  
+  --input-bg: #334155;
+  --border: #475569;
+  --border-light: rgba(255,255,255,0.1);
+  
+  --task-bg: linear-gradient(135deg, #334155, #3f4a5c);
+  --task-border: #475569;
+  --task-shadow: 0 8px 24px rgba(0,0,0,0.2);
+  --task-completed-bg: linear-gradient(135deg, #1e293b, #334155);
+  --task-completed-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  
+  --empty-bg: linear-gradient(135deg, #1e293b, #334155);
+  --progress-bg: rgba(255,255,255,0.1);
+  --accent-muted: linear-gradient(90deg, #475569, #64748b);
+  
+  --button-secondary-bg: rgba(102, 126, 234, 0.15);
+  --button-secondary-border: rgba(102, 126, 234, 0.3);
+  --button-danger-bg: rgba(239, 68, 68, 0.15);
+  --button-danger-border: rgba(239, 68, 68, 0.3);
+}
+
+/* 确保深色模式平滑过渡 */
+* {
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+
+/* 自定义滚动条 */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--border);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--text-muted);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-tertiary);
+}
