@@ -230,11 +230,11 @@ export default function Home() {
           )}
         </div>
 
-        {/* 三列布局容器 - 优化高度分配 */}
+        {/* 三列布局容器 - 优化间距协调 */}
         <div className="three-column-grid" style={{
           display: 'grid',
           gridTemplateColumns: '400px 1fr 450px',
-          gap: '2rem',
+          gap: '1.5rem', // 减少面板间距，让布局更紧凑协调
           maxWidth: '95vw',
           width: '100%',
           margin: '0 auto',
@@ -253,11 +253,11 @@ export default function Home() {
             overflow: 'hidden' // 防止整体滚动
           }}>
             
-            {/* 添加任务表单 - 紧凑布局，精确控制高度 */}
+            {/* 添加任务表单 - 统一顶部对齐 */}
             <div className="task-form-container" style={{ 
               background: 'var(--card-bg)',
               backdropFilter: 'blur(20px)',
-              padding: '1.25rem', // 进一步减少内边距
+              padding: '2.5rem 1.25rem 1.25rem 1.25rem', // 统一顶部padding为2.5rem
               borderRadius: '16px', 
               boxShadow: 'var(--card-shadow)',
               border: '1px solid var(--border-light)',
@@ -266,28 +266,29 @@ export default function Home() {
               flexDirection: 'column',
               overflow: 'hidden'
             }}>
-              {/* 标题区域 - 紧凑设计 */}
-              <div style={{
+              {/* 标题区域 - 统一样式 */}
+              <div className="section-header" style={{
                 display: 'flex',
                 alignItems: 'center',
-                marginBottom: '1rem',
-                gap: '0.5rem',
+                marginBottom: '1.5rem', // 统一标题下方间距
+                gap: '0.75rem',
+                height: '40px', // 固定标题区域高度
                 flexShrink: 0
               }}>
                 <div style={{
-                  width: '24px', // 进一步减少图标大小
-                  height: '24px',
-                  borderRadius: '6px',
+                  width: '32px', // 统一图标大小
+                  height: '32px',
+                  borderRadius: '8px',
                   background: 'linear-gradient(135deg, #667eea, #764ba2)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  fontSize: '0.75rem'
+                  fontSize: '1rem' // 统一图标字体大小
                 }}>
                   🎯
                 </div>
                 <h3 style={{ 
-                  fontSize: '0.95rem', // 减少字体大小
+                  fontSize: '1.1rem', // 统一标题字体大小
                   fontWeight: '600', 
                   color: 'var(--text-secondary)',
                   margin: 0
@@ -468,28 +469,29 @@ export default function Home() {
               scrollbarColor: 'var(--scrollbar-thumb) var(--scrollbar-track)',
               boxSizing: 'border-box' // 确保padding计算正确
             }}>
-              {/* 标题区域 - 跟随滚动 */}
-              <div style={{
+              {/* 标题区域 - 统一样式与左侧对齐 */}
+              <div className="section-header" style={{
                 display: 'flex',
                 alignItems: 'center',
-                marginBottom: '1.5rem',
+                marginBottom: '1.5rem', // 统一标题下方间距
                 gap: '0.75rem',
-                minHeight: '40px'
+                height: '40px', // 固定标题区域高度，与左侧一致
+                flexShrink: 0
               }}>
                 <div style={{
-                  width: '32px',
+                  width: '32px', // 统一图标大小
                   height: '32px',
                   borderRadius: '8px',
                   background: 'linear-gradient(135deg, #10b981, #34d399)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  fontSize: '1rem'
+                  fontSize: '1rem' // 统一图标字体大小
                 }}>
                   📋
                 </div>
                 <h3 style={{ 
-                  fontSize: '1.1rem', 
+                  fontSize: '1.1rem', // 统一标题字体大小
                   fontWeight: '600',
                   color: 'var(--text-secondary)',
                   margin: 0
@@ -801,11 +803,11 @@ export default function Home() {
               flexDirection: 'column',
               overflow: 'hidden'
             }}>
-              {/* 可滚动的统计内容区域 */}
+              {/* 可滚动的统计内容区域 - 统一顶部对齐 */}
               <div style={{
                 flex: 1,
                 overflowY: 'auto',
-                padding: '2.5rem 1.5rem 2rem 1.5rem',
+                padding: '2.5rem 1.5rem 2rem 1.5rem', // 统一顶部padding为2.5rem
                 scrollbarWidth: 'thin',
                 scrollbarColor: 'var(--scrollbar-thumb) var(--scrollbar-track)'
               }}>
@@ -895,6 +897,45 @@ export default function Home() {
           min-height: 100px !important;
         }
         
+        /* 统一所有面板的标题样式 */
+        .section-header {
+          display: flex !important;
+          align-items: center !important;
+          margin-bottom: 1.5rem !important;
+          gap: 0.75rem !important;
+          height: 40px !important;
+          flex-shrink: 0 !important;
+        }
+        
+        .section-header h3 {
+          font-size: 1.1rem !important;
+          font-weight: 600 !important;
+          color: var(--text-secondary) !important;
+          margin: 0 !important;
+        }
+        
+        .section-header > div:first-child {
+          width: 32px !important;
+          height: 32px !important;
+          border-radius: 8px !important;
+          display: flex !important;
+          align-items: center !important;
+          justify-content: center !important;
+          font-size: 1rem !important;
+        }
+        
+        /* 确保三个面板顶部对齐 */
+        .left-panel,
+        .task-list-column,
+        .mobile-column:last-child {
+          padding-top: 0 !important;
+        }
+        
+        .task-form-container,
+        .task-list-content {
+          padding-top: 2.5rem !important;
+        }
+        
         /* 确保任务内容区域对齐 */
         .task-card .task-content > div {
           margin: 0 !important;
@@ -941,7 +982,7 @@ export default function Home() {
         @media (max-width: 1400px) {
           .three-column-grid {
             grid-template-columns: 360px 1fr 400px !important;
-            gap: 1.5rem !important;
+            gap: 1.25rem !important; /* 调整中等屏幕间距 */
             maxWidth: 90vw !important;
           }
         }
@@ -949,7 +990,7 @@ export default function Home() {
         @media (max-width: 1200px) {
           .three-column-grid {
             grid-template-columns: 320px 1fr 350px !important;
-            gap: 1rem !important;
+            gap: 1rem !important; /* 调整小屏幕间距 */
             maxWidth: 85vw !important;
           }
         }
