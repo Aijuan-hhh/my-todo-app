@@ -521,7 +521,7 @@ export default function Home() {
                 gap: '0.75rem',
                 paddingBottom: '1rem' // 为任务列表添加额外底部空间
               }}>
-                {tasks.map((task, index) => {
+                {tasks.map((task) => {
                   const priorityInfo = getPriorityStyle(task.priority)
                   return (
                     <div

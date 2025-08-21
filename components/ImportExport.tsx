@@ -10,7 +10,7 @@ interface ImportExportProps {
 
 export default function ImportExport({ tasks, onImportComplete }: ImportExportProps) {
   const [loading, setLoading] = useState(false)
-  const [importPreview, setImportPreview] = useState<any[]>([])
+  const [importPreview, setImportPreview] = useState<Record<string, string>[]>([])
   const [showPreview, setShowPreview] = useState(false)
   const fileInputRef = useRef<HTMLInputElement>(null)
 
@@ -82,7 +82,7 @@ export default function ImportExport({ tasks, onImportComplete }: ImportExportPr
       const result = Papa.parse(text, {
         header: true,
         skipEmptyLines: true,
-        encoding: 'UTF-8'
+    
       })
 
       if (result.errors.length > 0) {
@@ -91,7 +91,7 @@ export default function ImportExport({ tasks, onImportComplete }: ImportExportPr
         return
       }
 
-      const data = result.data as any[]
+      const data = result.data as Record<string, string>[]
       
       // 验证数据格式
       if (data.length === 0) {

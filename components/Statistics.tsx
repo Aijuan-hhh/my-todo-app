@@ -39,7 +39,7 @@ export default function Statistics({ tasks }: StatisticsProps) {
 
     // 按分类统计（如果有category字段）
     const categoryStats = tasks.reduce((acc: { [key: string]: number }, task) => {
-      const category = task.category || '未分类'
+      const category = (task as Task & { category?: string }).category || '未分类'
       acc[category] = (acc[category] || 0) + 1
       return acc
     }, {})
